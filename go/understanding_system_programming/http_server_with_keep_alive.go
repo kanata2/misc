@@ -14,8 +14,8 @@ import (
 	"time"
 )
 
-func isGzipAcceptable(conn net.Conn) bool {
-	return strings.index(strings.Join(request.Header["Accept-Encoding"], ","), "gzip") != -1
+func isGzipAcceptable(request *http.Request) bool {
+	return strings.Index(strings.Join(request.Header["Accept-Encoding"], ","), "gzip") != -1
 }
 
 func processSession(conn net.Conn) {
@@ -40,13 +40,12 @@ func processSession(conn net.Conn) {
 		}
 		fmt.Println(string(dump))
 		response := http.Response{
-			StatusCode:    200,
-			ProtoMajor:    1,
-			ProtoMinor:    1,
-			ContentLength: int64(len(content)),
-			Body:          ioutil.NopCloser(strings.NewReader(content)),
+			StatusCode: 200,
+			ProtoMajor: 1,
+			ProtoMinor: 1,
+			Header:     make(http.Header),
 		}
-		if isGzipAcceptable {
+		if isGzipAcceptable(request) {
 			content := "Hello, World!(gzip mode)\n"
 			var buffer bytes.Buffer
 			writer := gzip.NewWriter(&buffer)
@@ -56,7 +55,7 @@ func processSession(conn net.Conn) {
 			response.ContentLength = int64(buffer.Len())
 			response.Header.Set("Content-Encoding", "gzip")
 		} else {
-			content = "Hello, World!\n"
+			content := "Hello, World!\n"
 			response.Body = ioutil.NopCloser(strings.NewReader(content))
 			response.ContentLength = int64(len(content))
 		}
