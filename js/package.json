@@ -1,5 +1,5 @@
 {
-  "name": "the simplest sandbox",
+  "name": "sandbox",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -10,5 +10,9 @@
   "devDependencies": {
     "webpack": "^3.8.1",
     "webpack-dev-server": "^2.9.3"
+  },
+  "dependencies": {
+    "ts-loader": "^3.1.1",
+    "typescript": "^2.5.3"
   }
 }
