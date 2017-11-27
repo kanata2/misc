@@ -1,0 +1,12 @@
+{
+  "name": "js_promise_book",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "mocha ./basic_test.js"
+  },
+  "devDependencies": {
+    "mocha": "^4.0.1"
+  }
+}
